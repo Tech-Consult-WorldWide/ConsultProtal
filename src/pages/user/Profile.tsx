@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { auth, db } from "../../Firebase"; // Import Firebase auth and Firestore
-import { doc, getDoc } from "firebase/firestore"; // Firestore functions
+import { auth, db } from "../../Firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import "./Profile.css";
 import InfoCard from "./../components/infoLabel.tsx";
 
+interface UserData {
+  username: string;
+  email: string;
+}
+
 function Profile() {
-  const [userData, setUserData] = useState({ username: "", email: "" });
+  const [userData, setUserData] = useState<UserData>({ username: "", email: "" });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const user = auth.currentUser; // Get the currently authenticated user
-        if (user) {
-          const userDoc = doc(db, "users", user.uid); // Reference the user's Firestore document
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userDoc = doc(db, "users", user.uid);
           const userSnapshot = await getDoc(userDoc);
 
           if (userSnapshot.exists()) {
-            setUserData(userSnapshot.data()); // Set the user data from Firestore
+            const data = userSnapshot.data();
+            setUserData({
+              username: data.username || "N/A",
+              email: data.email || "N/A",
+            });
           } else {
             console.error("No user data found in Firestore");
           }
-        } else {
-          console.error("No authenticated user found");
+        } catch (error) {
+          console.error("Error fetching user data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      } finally {
-        setLoading(false); // Stop the loading state
+      } else {
+        console.error("No authenticated user found");
       }
-    };
 
-    fetchUserData();
+      setLoading(false);
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
   }, []);
 
   if (loading) {
@@ -46,8 +55,6 @@ function Profile() {
       <form className="profile-form">
         <InfoCard label={"Name"} value={userData.username || "N/A"} />
         <InfoCard label={"Email"} value={userData.email || "N/A"} />
-
-        <button type="submit">Save Changes</button>
       </form>
     </div>
   );
