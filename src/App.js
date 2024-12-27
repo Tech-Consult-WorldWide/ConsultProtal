@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
-import Login from './pages/user/Login';
-import HomePage from './pages/user/HomePage';
-import SignUp from './pages/user/SignUp';
-import app from './Firebase'
+import Login from './pages/user/Login.tsx';
+import HomePage from './pages/user/HomePage.tsx';
+import SignUp from './pages/user/SignUp.tsx';
 
 import Dashboard from './pages/user/Dashboard';
-import Profile from './pages/user/Profile';
+import Profile from './pages/user/Profile.tsx';
 import Settings from './pages/user/Settings';
 
 
