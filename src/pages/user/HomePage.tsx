@@ -22,35 +22,40 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        // Reference the Firestore collection
         const expertsCollection = collection(db, "Experts");
         const expertsSnapshot = await getDocs(expertsCollection);
 
-        // Map through the documents to extract data
         const expertsList = expertsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // Update state with fetched experts
         setExperts(expertsList);
       } catch (err) {
         console.error("Error fetching experts:", err);
-        setError("Failed to load experts. Please try again later."); // Set error message
+        setError("Failed to load experts. Please try again later.");
       } finally {
-        setLoading(false); // Always stop loading
+        setLoading(false);
       }
     };
 
-    fetchExperts(); // Call the fetch function
+    fetchExperts();
   }, []);
 
   if (loading) {
-    return <div className="homepage-container">Loading...</div>;
+    return (
+      <div className="homepage-container">
+        <div className="loading">Loading...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="homepage-container">{error}</div>;
+    return (
+      <div className="homepage-container">
+        <div className="error">{error}</div>
+      </div>
+    );
   }
 
   return (
@@ -59,17 +64,24 @@ const HomePage: React.FC = () => {
         <h1>Welcome to Your Portal</h1>
         <nav className="homepage-nav">
           <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/settings">Settings</a></li>
+            <li>
+              <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+              <a href="/profile">Profile</a>
+            </li>
+            <li>
+              <a href="/settings">Settings</a>
+            </li>
           </ul>
         </nav>
       </header>
       <main className="homepage-main">
-        <h2>Experts</h2>
+        <h2>Meet Our Experts</h2>
         <div className="expert-list">
           {experts.length > 0 ? (
             experts.map((expert) => (
+
               <ExpertCard
                 key={expert.id}
                 id={expert.id}
@@ -79,9 +91,10 @@ const HomePage: React.FC = () => {
                 availability={expert.availability}
                 bio={expert.bio}
               />
+
             ))
           ) : (
-            <p>No experts found.</p>
+            <p className="no-experts">No experts found.</p>
           )}
         </div>
       </main>

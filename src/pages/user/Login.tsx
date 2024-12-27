@@ -41,6 +41,9 @@ function Login() {
       setIsLoading(false);
     }
   };
+  const handleSignUp = () => {
+    navigate("/signup"); // Redirect to the signup page
+  };
 
   const handleFirebaseError = (errorCode) => {
     switch (errorCode) {
@@ -84,6 +87,9 @@ function Login() {
           <p>or</p>
           <button onClick={handleGoogleSignIn} disabled={isLoading}>
             {isLoading ? "Signing in..." : "Sign in with Google"}
+          </button>
+          <button onClick={handleSignUp} disabled={isLoading}>
+          {"sign up"}
           </button>
         </div>
       </div>
