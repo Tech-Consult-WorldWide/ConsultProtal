@@ -8,7 +8,7 @@ import app from './Firebase'
 import Dashboard from './pages/user/Dashboard';
 import Profile from './pages/user/Profile';
 import Settings from './pages/user/Settings';
-
+import ClientDashboard from './pages/user/client/ClientDashboard';
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/clientdashboard" element={<ClientDashboard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
