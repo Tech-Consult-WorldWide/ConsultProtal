@@ -1,12 +1,23 @@
+// HomePage.tsx
 import React, { useEffect, useState } from "react";
 import { db } from "../../Firebase"; // Import Firestore
 import { collection, getDocs } from "firebase/firestore"; // Firestore functions
+import ExpertCard from "./../components/ExpertCard.tsx"; 
 import "./HomePage.css";
 
-function HomePage() {
-  const [experts, setExperts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // State to track errors
+interface Expert {
+  id: string;
+  name: string;
+  photoUrl: string;
+  specialization: string;
+  availability: string;
+  bio: string;
+}
+
+const HomePage: React.FC = () => {
+  const [experts, setExperts] = useState<Expert[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null); // State to track errors
 
   useEffect(() => {
     const fetchExperts = async () => {
@@ -59,18 +70,15 @@ function HomePage() {
         <div className="expert-list">
           {experts.length > 0 ? (
             experts.map((expert) => (
-              <div className="expert-card" key={expert.id}>
-                <img
-                  src={expert.photoUrl || "https://via.placeholder.com/150"} // Fallback image
-                  alt={expert.name}
-                  className="expert-photo"
-                />
-                <h3>{expert.name}</h3>
-                <p><strong>Specialization:</strong> {expert.specialization}</p>
-                <p><strong>Availability:</strong> {expert.availability}</p>
-                <p>{expert.bio}</p>
-                <button>Book Appointment</button>
-              </div>
+              <ExpertCard
+                key={expert.id}
+                id={expert.id}
+                name={expert.name}
+                photoUrl={expert.photoUrl}
+                specialization={expert.specialization}
+                availability={expert.availability}
+                bio={expert.bio}
+              />
             ))
           ) : (
             <p>No experts found.</p>
@@ -82,6 +90,6 @@ function HomePage() {
       </footer>
     </div>
   );
-}
+};
 
 export default HomePage;
