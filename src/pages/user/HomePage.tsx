@@ -81,16 +81,15 @@ const HomePage: React.FC = () => {
         <div className="expert-list">
           {experts.length > 0 ? (
             experts.map((expert) => (
-
               <ExpertCard
-                key={expert.id}
-                id={expert.id}
-                name={expert.name}
-                photoUrl={expert.photoUrl}
-                specialization={expert.specialization}
-                availability={expert.availability}
-                bio={expert.bio}
-              />
+              key={expert.id}
+              id={expert.id}
+              name={expert.name}
+              photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
+              specialization={expert.specialization}
+              availability={expert.availability}
+              bio={expert.bio}
+            />
 
             ))
           ) : (
