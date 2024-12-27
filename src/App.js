@@ -8,6 +8,7 @@ import Dashboard from './pages/user/Dashboard';
 import Profile from './pages/user/Profile.tsx';
 import Settings from './pages/user/Settings';
 import ClientDashboard from './pages/user/client/ClientDashboard';
+import BookAppointmentPage from './pages/user/BookAppointment.tsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/book-appointment/:expertId" element={<BookAppointmentPage />} />
       </Routes>
     </Router>
 </div>
