@@ -12,6 +12,7 @@ interface Expert {
   specialization: string;
   availability: string;
   bio: string;
+  email: string;
 }
 
 const HomePage: React.FC = () => {
