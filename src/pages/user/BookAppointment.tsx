@@ -1,40 +1,119 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // To get the expert's ID from the URL
-import { db } from "../../Firebase"; // Import Firestore
-import { doc, getDoc } from "firebase/firestore"; // Firestore functions
+import { useParams } from "react-router-dom";
+import { auth, db } from "../../Firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import InfoCard from "../components/infoLabel.tsx";
 import "./HomePage.css";
-import "./BookAppointment.css"
+import "./BookAppointment.css";
 
 function BookAppointmentPage() {
-  const { expertId } = useParams(); // Get expert ID from URL
-  const [expert, setExpert] = useState(null);
+  const { expertId } = useParams();
+  const [expert, setExpert] = useState<{
+    email: string;
+    name: string;
+    photoUrl?: string;
+    specialization: string;
+    availability: string;
+    bio: string;
+  } | null>(null);
+  const [clientEmail, setClientEmail] = useState<string | null>(null);
+  const [clientName, setClientName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const appointmentDate = formData.get("appointment-date");
+    const appointmentTime = formData.get("appointment-time");
+
+    if (expert && clientEmail && clientName) {
+      const appointmentDetails = `Date: ${appointmentDate}, Time: ${appointmentTime}, Patient: ${clientName}`;
+
+      try {
+        setLoading(true);
+        // Make API call to send confirmation emails
+        const response = await fetch("http://localhost:9000/send-appointment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            expertEmail: expert.email,
+            clientEmail,
+            appointmentDetails,
+          }),
+        });
+
+        if (response.ok) {
+          alert("Appointment confirmed!");
+          window.location.href = "/home";
+        } else {
+          alert("Failed to confirm appointment. Please try again.");
+          setLoading(false);
+        }
+      } catch (err) {
+        alert("Error: Unable to send confirmation emails.");
+        setLoading(false);
+      }
+    }
+    
+  };
 
   useEffect(() => {
     const fetchExpertDetails = async () => {
       try {
-        // Reference to the specific expert document in Firestore
         const expertDoc = doc(db, "Experts", expertId);
         const expertSnapshot = await getDoc(expertDoc);
 
         if (expertSnapshot.exists()) {
-          setExpert(expertSnapshot.data());
+          setExpert(expertSnapshot.data() as {
+            email: string;
+            name: string;
+            photoUrl?: string;
+            specialization: string;
+            availability: string;
+            bio: string;
+          });
         } else {
           setError("Expert not found.");
         }
       } catch (err) {
         setError("Failed to fetch expert details.");
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchExpertDetails(); // Fetch expert data
+    const fetchClientDetails = async () => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          try {
+            const userDoc = doc(db, "users", user.uid);
+            const userSnapshot = await getDoc(userDoc);
+
+            if (userSnapshot.exists()) {
+              const data = userSnapshot.data();
+              setClientEmail(data.email || "N/A");
+              setClientName(data.username || "N/A");
+            } else {
+              console.error("No user data found in Firestore");
+            }
+          } catch (err) {
+            console.error("Error fetching client data:", err);
+          }
+        } else {
+          console.error("No authenticated user found");
+        }
+      });
+    };
+
+    fetchExpertDetails();
+    fetchClientDetails();
+    setLoading(false);
   }, [expertId]);
 
   if (loading) {
-    return <div>Loading expert details...</div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -43,25 +122,43 @@ function BookAppointmentPage() {
 
   return (
     <div className="book-appointment-container">
-      <h1>Book an Appointment with {expert.name}</h1>
+      <h1>Book an Appointment with {expert?.name}</h1>
       <div className="expert-details">
         <img
-          src={expert.photoUrl || "https://via.placeholder.com/150"} // Fallback image
-          alt={expert.name}
+          src={expert?.photoUrl || "https://via.placeholder.com/150"}
+          alt={expert?.name}
           className="expert-photo"
         />
-        <p><strong>Specialization:</strong> {expert.specialization}</p>
-        <p><strong>Availability:</strong> {expert.availability}</p>
-        <p>{expert.bio}</p>
+        <p>
+          <strong>Specialization:</strong> {expert?.specialization}
+        </p>
+        <p>
+          <strong>Availability:</strong> {expert?.availability}
+        </p>
+        <p>{expert?.bio}</p>
       </div>
-      <form className="appointment-form">
-        <label htmlFor="appointment-date">Choose Date:</label>
-        <input type="date" id="appointment-date" name="appointment-date" required />
-        
-        <label htmlFor="appointment-time">Choose Time:</label>
-        <input type="time" id="appointment-time" name="appointment-time" required />
+      <form className="appointment-form" onSubmit={handleSubmit}>
+        <InfoCard label={"Name"} value={clientName || "N/A"} />
 
-        <button type="submit">Confirm Appointment</button>
+        <InfoCard label={"Email"} value={clientEmail || "N/A"} />
+
+        <label htmlFor="appointment-date">Choose Date:</label>
+        <input
+          type="date"
+          id="appointment-date"
+          name="appointment-date"
+          required
+        />
+
+        <label htmlFor="appointment-time">Choose Time:</label>
+        <input
+          type="time"
+          id="appointment-time"
+          name="appointment-time"
+          required
+        />
+
+        <button type="submit" disabled={loading}>Confirm Appointment</button>
       </form>
     </div>
   );
