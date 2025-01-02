@@ -1,4 +1,3 @@
-// HomePage.tsx
 import React, { useEffect, useState } from "react";
 import { db } from "../../Firebase"; // Import Firestore
 import { collection, getDocs } from "firebase/firestore"; // Firestore functions
@@ -19,6 +18,11 @@ const HomePage: React.FC = () => {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); // State to track errors
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };  
 
   useEffect(() => {
     const fetchExperts = async () => {
@@ -59,6 +63,18 @@ const HomePage: React.FC = () => {
     );
   }
 
+  const removeExpert = (id: string) => {
+    setExperts((prevExperts) => prevExperts.filter((expert) => expert.id !== id));
+  };
+
+  const updateExpert = (id: string, updatedData: Partial<Expert>) => {
+    setExperts((prevExperts) =>
+      prevExperts.map((expert) =>
+        expert.id === id ? { ...expert, ...updatedData } : expert
+      )
+    );
+  };
+
   return (
     <div className="homepage-container">
       <header className="homepage-header">
@@ -79,19 +95,31 @@ const HomePage: React.FC = () => {
       </header>
       <main className="homepage-main">
         <h2>Meet Our Experts</h2>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search experts..."
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+        </div>
+        
         <div className="expert-list">
-          {experts.length > 0 ? (
-            experts.map((expert) => (
+          {experts.filter((expert) =>
+            expert.name.toLowerCase().includes(searchQuery.toLowerCase())
+          ).length > 0 ? (
+            experts.filter((expert) =>
+              expert.name.toLowerCase().includes(searchQuery.toLowerCase())
+            ).map((expert) => (
               <ExpertCard
-              key={expert.id}
-              id={expert.id}
-              name={expert.name}
-              photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
-              specialization={expert.specialization}
-              availability={expert.availability}
-              bio={expert.bio}
-            />
-
+                key={expert.id}
+                id={expert.id}
+                name={expert.name}
+                photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
+                specialization={expert.specialization}
+                availability={expert.availability}
+                bio={expert.bio}
+              />
             ))
           ) : (
             <p className="no-experts">No experts found.</p>

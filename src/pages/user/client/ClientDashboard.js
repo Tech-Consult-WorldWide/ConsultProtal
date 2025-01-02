@@ -4,8 +4,8 @@ import ExpertProfileCard from './ExpertProfile';
 
 const ClientDashboard = () => {
   const [experts, setExperts] = useState([
-    { id: 1, name: 'John Doe', summary: 'Expert in Math and Physics', image: 'https://via.placeholder.com/100' },
-    { id: 2, name: 'Jane Smith', summary: 'Specialist in Computer Science', image: 'https://via.placeholder.com/100' }
+    { id: 1, name: 'Dr. john stapen', summary: 'Expert in Math and Physics', image: 'https://via.placeholder.com/100' },
+    { id: 2, name: 'Dr. Jane Doe', summary: 'Specialist in Computer Science', image: 'https://via.placeholder.com/100' }
   ]);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,26 +15,35 @@ const ClientDashboard = () => {
   };
 
   const addExpert = () => {
+    // Prompt the user to enter the expert's designation
+    const newDesignation = prompt("Please enter the new expert's Name:");
+    const newsummary = prompt("Please enter the new expert's specialization:");
     const newExpert = {
       id: experts.length + 1,
       name: 'New Expert',
+      name: newDesignation,
       summary: 'Specialist in AI and ML',
-      image: 'https://via.placeholder.com/100'
-    };
+      summary: newsummary,
+      image: 'https://via.placeholder.com/100',
+    };  
     setExperts((prevExperts) => [...prevExperts, newExpert]);
   };
 
+  
   const removeExpert = (id) => {
     setExperts((prevExperts) => prevExperts.filter((expert) => expert.id !== id));
   };
 
-  const updateExpert = (id, updatedData) => {
-    setExperts((prevExperts) =>
+  const updateExpert = (id) => {
+    const newName = prompt("Please enter the new name for the expert:");
+    const Designation = prompt("Please enter the new expertize for the expert:");
+    
+      setExperts((prevExperts) =>
       prevExperts.map((expert) =>
-        expert.id === id ? { ...expert, ...updatedData } : expert
-      )
+        expert.id === id ? { ...expert, name: newName, specialty: Designation } : expert )
     );
   };
+  
 
   return (
     <div className="dashboard-container">
@@ -51,7 +60,7 @@ const ClientDashboard = () => {
               type="text"
               placeholder="Search experts..."
               value={searchQuery}
-              onChange={handleSearch}
+              onChange={handleSearch}   
             />
           </div>
         </div>
