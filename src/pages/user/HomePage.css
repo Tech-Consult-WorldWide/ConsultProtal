@@ -6,6 +6,14 @@ body {
   background-color: #f4f4f9;
 }
 
+.search-bar {
+  width: 200px;
+  padding: 8px 15px;
+  font-size: 16px;
+  float: right; 
+  margin-top: -55px; 
+}
+
 /* Header Styles */
 .homepage-header {
   background-color: #003f5c;
@@ -14,6 +22,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; /* Allowing the search bar to be positioned absolute */
 }
 
 .homepage-header h1 {
@@ -34,6 +43,13 @@ body {
   background-color: #2f4b7c;
 }
 
+/* Search Bar Container */
+.search-bar-container {
+  position: absolute;
+  right: 40px;
+  top: 20px;
+}
+
 /* Main Content Styles */
 .homepage-main {
   padding: 20px;
@@ -50,6 +66,7 @@ body {
   color: #333;
   font-size: 16px;
   line-height: 1.6;
+  
 }
 
 /* Footer Styles */
