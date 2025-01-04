@@ -48,7 +48,7 @@ function BookAppointmentPage() {
 
         if (response.ok) {
           alert("Appointment confirmed!");
-          window.location.href = "/home";
+          window.location.href = "/ConsultProtal/home";
         } else {
           alert("Failed to confirm appointment. Please try again.");
           setLoading(false);
