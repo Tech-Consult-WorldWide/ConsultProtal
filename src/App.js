@@ -13,7 +13,7 @@ import BookAppointmentPage from './pages/user/BookAppointment.tsx';
 function App() {
   return (
 <div className="App">
-    <Router basename="/ConsultPortal">
+    <Router basename="/ConsultProtal">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/clientdashboard" element={<ClientDashboard />} />
