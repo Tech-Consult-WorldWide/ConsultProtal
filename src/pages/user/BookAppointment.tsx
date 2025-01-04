@@ -34,7 +34,7 @@ function BookAppointmentPage() {
       try {
         setLoading(true);
         // Make API call to send confirmation emails
-        const response = await fetch("http://localhost:9000/send-appointment", {
+        const response = await fetch("https://consultportal-backend.onrender.com/send-appointment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
