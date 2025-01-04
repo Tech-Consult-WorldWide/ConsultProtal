@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ConsultPortal/static/css/main.65874f9e.css",
-    "main.js": "/ConsultPortal/static/js/main.47cbe519.js",
+    "main.js": "/ConsultPortal/static/js/main.8b12c01c.js",
     "static/js/488.947f5048.chunk.js": "/ConsultPortal/static/js/488.947f5048.chunk.js",
     "index.html": "/ConsultPortal/index.html",
     "main.65874f9e.css.map": "/ConsultPortal/static/css/main.65874f9e.css.map",
-    "main.47cbe519.js.map": "/ConsultPortal/static/js/main.47cbe519.js.map",
+    "main.8b12c01c.js.map": "/ConsultPortal/static/js/main.8b12c01c.js.map",
     "488.947f5048.chunk.js.map": "/ConsultPortal/static/js/488.947f5048.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.65874f9e.css",
-    "static/js/main.47cbe519.js"
+    "static/js/main.8b12c01c.js"
   ]
 }
