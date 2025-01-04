@@ -1,6 +1,6 @@
 {
+  "homepage": "https://Tech-Consult-WorldWide.github.io/ConsultPortal",
   "name": "consult-protal",
-  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@types/react": "^19.0.2",
@@ -21,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +45,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
   }
