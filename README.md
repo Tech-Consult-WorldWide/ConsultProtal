@@ -1,70 +1,266 @@
-# Getting Started with Create React App
+# **ConsultPortal Frontend**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The frontend for **ConsultPortal**, a real-time expert consultation platform. The frontend provides an intuitive interface for clients to book appointments, view expert availability, and chat with experts.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## **Features**
 
-### `npm start`
+1. **User Authentication**:
+   - Login and registration using Firebase Authentication.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Expert Listing**:
+   - Displays a searchable list of experts along with their specialization, availability, and bio.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Real-Time Availability Tracker**:
+   - Displays the real-time availability status of experts (`Available`, `Busy`, or `Offline`).
 
-### `npm test`
+4. **Appointment Booking**:
+   - Clients can select an expert, choose a date and time, and book an appointment.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5. **Real-Time Chat**:
+   - Clients and experts can engage in live conversations.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## **Technology Stack**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React**: For building the user interface.
+- **CSS**: For styling and responsive design.
+- **React Router**: For routing and navigation.
+- **Firebase**:
+  - Authentication: For secure user login.
+  - Firestore: For fetching expert and client data.
+- **Solace Event Broker**: For real-time updates and communication.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## **Project Structure**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+frontend/
+├── build/                  # Production-ready build files (generated after build)
+├── node_modules/           # Installed dependencies
+├── public/                 # Static assets
+│   ├── index.html          # Main HTML file
+│   ├── favicon.ico         # Favicon
+│   └── logo.svg            # Application logo
+├── src/                    # Main source code
+│   ├── components/         # Reusable React components
+│   │   ├── Availability/   # Availability tracker components
+│   │   │   ├── AvailabilityTracker.css
+│   │   │   └── AvailabilityTracker.js
+│   │   ├── Chat/           # Chat system components
+│   │   │   ├── Chat.css
+│   │   │   ├── Chat.js
+│   │   │   └── ChatWrapper.js
+│   │   ├── ExpertCard.tsx  # Expert card component
+│   │   ├── infoLabel.tsx   # Info label component
+│   │   └── Notify.tsx      # Notification component
+│   ├── pages/              # Page components
+│   │   ├── user/           # User-related pages
+│   │   │   ├── client/     # Client-specific pages
+│   │   │   │   ├── ClientDashboard.css
+│   │   │   │   ├── ClientDashboard.js
+│   │   │   │   └── ExpertProfile.js
+│   │   │   ├── BookAppointment.tsx  # Appointment booking page
+│   │   │   ├── Dashboard.css        # Dashboard styling
+│   │   │   ├── Dashboard.js         # Dashboard page
+│   │   │   ├── HomePage.css         # Homepage styling
+│   │   │   ├── HomePage.tsx         # Homepage
+│   │   │   ├── Login.css            # Login styling
+│   │   │   ├── Login.tsx            # Login page
+│   │   │   ├── Profile.css          # Profile styling
+│   │   │   ├── Profile.tsx          # Profile page
+│   │   │   ├── Setting.css          # Settings styling
+│   │   │   ├── Settings.js          # Settings page
+│   │   │   ├── SignUp.css           # Signup styling
+│   │   │   └── SignUp.tsx           # Signup page
+│   ├── api.js              # API utilities for interacting with the backend
+│   ├── App.css             # Global styling
+│   ├── App.js              # Main React application
+│   ├── App.test.js         # Unit tests for the App component
+│   ├── Firebase.js         # Firebase configuration
+│   ├── index.css           # Global styles for the application
+│   ├── index.js            # Entry point for the React application
+│   ├── reportWebVitals.js  # Performance reporting
+│   ├── setupTests.js       # Test setup
+│   ├── solaceClient.js     # Solace client for real-time communication
+├── .env                    # Environment variables
+├── .gitignore              # Git ignore rules
+├── craco.config.js         # Configuration for Create React App with custom overrides
+├── package-lock.json       # Dependency lock file
+├── package.json            # Dependency list and project scripts
+├── README.md               # Project documentation
+├── tailwind.config.js      # Tailwind CSS configuration (if used)
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## **Setup Instructions**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **1. Clone the Repository**
 
-## Learn More
+```bash
+git clone <frontend-repo-url>
+cd frontend
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **2. Install Dependencies**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm install
+```
 
-### Code Splitting
+### **3. Configure Environment Variables**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Create a `.env` file in the root directory and add the following:
 
-### Analyzing the Bundle Size
+```bash
+REACT_APP_BACKEND_URL=http://localhost:9000
+REACT_APP_SOLACE_URL=wss://<your-solace-host>:443
+REACT_APP_SOLACE_VPN=<your-vpn-name>
+REACT_APP_SOLACE_USERNAME=<your-username>
+REACT_APP_SOLACE_PASSWORD=<your-password>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **4. Start the Development Server**
 
-### Making a Progressive Web App
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## **Solace Integrations**
 
-### Deployment
+### **1. Real-Time Availability**
+   - The frontend subscribes to the topic: `app/expert/status/<expertId>` to display real-time availability.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**Code Example**:
 
-### `npm run build` fails to minify
+_File: components/Availability/AvailabilityTracker.js_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+import solace from "solace";
+
+const subscribeToAvailability = (expertId, setAvailability) => {
+  const topic = `app/expert/status/${expertId}`;
+  const session = solace.SolclientFactory.createSession({
+    url: process.env.REACT_APP_SOLACE_URL,
+    vpnName: process.env.REACT_APP_SOLACE_VPN,
+    userName: process.env.REACT_APP_SOLACE_USERNAME,
+    password: process.env.REACT_APP_SOLACE_PASSWORD,
+  });
+
+  session.on(solace.SessionEventCode.MESSAGE, (message) => {
+    const data = JSON.parse(message.getBinaryAttachment());
+    setAvailability(data.status);
+  });
+
+  session.connect(() => {
+    session.subscribe(
+      solace.SolclientFactory.createTopicDestination(topic),
+      true,
+      "availability-subscription",
+      10000
+    );
+  });
+};
+```
+
+### **2. Real-Time Chat**
+   - Chat messages are subscribed to and published on the topic: `app/chat/<conversationId>`.
+
+**Code Example**:
+
+_File: components/Chat/Chat.js_
+
+```javascript
+import solace from "solace";
+import React, { useState, useEffect } from "react";
+
+const Chat = ({ conversationId, userId }) => {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  useEffect(() => {
+    const session = solace.SolclientFactory.createSession({
+      url: process.env.REACT_APP_SOLACE_URL,
+      vpnName: process.env.REACT_APP_SOLACE_VPN,
+      userName: process.env.REACT_APP_SOLACE_USERNAME,
+      password: process.env.REACT_APP_SOLACE_PASSWORD,
+    });
+
+    session.on(solace.SessionEventCode.MESSAGE, (message) => {
+      const data = JSON.parse(message.getBinaryAttachment());
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    session.connect(() => {
+      const topic = `app/chat/${conversationId}`;
+      session.subscribe(
+        solace.SolclientFactory.createTopicDestination(topic),
+        true,
+        "chat-subscription",
+        10000
+      );
+    });
+
+    return () => session.disconnect();
+  }, [conversationId]);
+
+  const sendMessage = () => {
+    const session = solace.SolclientFactory.createSession({ /* config */ });
+    const message = solace.SolclientFactory.createMessage();
+
+    message.setDestination(
+      solace.SolclientFactory.createTopicDestination(`app/chat/${conversationId}`)
+    );
+    message.setBinaryAttachment(
+      JSON.stringify({ senderId: userId, content: newMessage, timestamp: new Date().toISOString() })
+    );
+
+    session.send(message);
+    setNewMessage("");
+  };
+
+  return (
+    <div>
+      <div>
+        {messages.map((msg, index) => (
+          <p key={index}>
+            <strong>{msg.senderId}:</strong> {msg.content}
+          </p>
+        ))}
+      </div>
+      <input
+        type="text"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+      />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
+};
+
+export default Chat;
+```
+
+---
+
+## **Future Enhancements**
+
+1. **Push Notifications**:
+   - Notify clients and experts about new messages or updates using Firebase Cloud Messaging.
+
+2. **Video Conferencing**:
+   - Add support for video/audio calls using WebRTC or Twilio.
+
+3. **Admin Dashboard**:
+   - Include a dashboard for administrators to monitor and manage users.
+
+4. **AI-Powered Recommendations**:
+   - Use AI to help clients select the right expert based on their needs.
