@@ -34,17 +34,20 @@ function BookAppointmentPage() {
       try {
         setLoading(true);
         // Make API call to send confirmation emails
-        const response = await fetch("https://consultportal-backend.onrender.com/send-appointment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            expertEmail: expert.email,
-            clientEmail,
-            appointmentDetails,
-          }),
-        });
+        const response = await fetch(
+          "https://consultportal-backend.onrender.com/send-appointment",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              expertEmail: expert.email,
+              clientEmail,
+              appointmentDetails,
+            }),
+          }
+        );
 
         if (response.ok) {
           alert("Appointment confirmed!");
@@ -58,7 +61,6 @@ function BookAppointmentPage() {
         setLoading(false);
       }
     }
-    
   };
 
   useEffect(() => {
@@ -68,14 +70,16 @@ function BookAppointmentPage() {
         const expertSnapshot = await getDoc(expertDoc);
 
         if (expertSnapshot.exists()) {
-          setExpert(expertSnapshot.data() as {
-            email: string;
-            name: string;
-            photoUrl?: string;
-            specialization: string;
-            availability: string;
-            bio: string;
-          });
+          setExpert(
+            expertSnapshot.data() as {
+              email: string;
+              name: string;
+              photoUrl?: string;
+              specialization: string;
+              availability: string;
+              bio: string;
+            }
+          );
         } else {
           setError("Expert not found.");
         }
@@ -137,6 +141,12 @@ function BookAppointmentPage() {
         </p>
         <p>{expert?.bio}</p>
       </div>
+      {/* Chat with Expert */}
+      <div className="chat-now">
+        <a href={`/chat/${expertId}`} className="chat-button">
+          Chat Now with {expert?.name}
+        </a>
+      </div>
       <form className="appointment-form" onSubmit={handleSubmit}>
         <InfoCard label={"Name"} value={clientName || "N/A"} />
 
@@ -158,7 +168,9 @@ function BookAppointmentPage() {
           required
         />
 
-        <button type="submit" disabled={loading}>Confirm Appointment</button>
+        <button type="submit" disabled={loading}>
+          Confirm Appointment
+        </button>
       </form>
     </div>
   );

@@ -9,6 +9,9 @@ import Profile from './pages/user/Profile.tsx';
 import Settings from './pages/user/Settings';
 import ClientDashboard from './pages/user/client/ClientDashboard';
 import BookAppointmentPage from './pages/user/BookAppointment.tsx';
+import AvailabilityTracker from './pages/components/Availability/AvailabilityTracker';
+import ChatWrapper from './pages/components/Chat/ChatWrapper';
+
 
 function App() {
   return (
@@ -23,6 +26,11 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/book-appointment/:expertId" element={<BookAppointmentPage />} />
+        
+        <Route path="/availability-tracker" element={<AvailabilityTracker />} />
+        <Route path="/chat/:conversationId" element={<ChatWrapper />} />
+
+
       </Routes>
     </Router>
 </div>

@@ -1,0 +1,29 @@
+.chat {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .chat h3 {
+    text-align: center;
+  }
+  
+  .chat .messages {
+    height: 200px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    padding: 10px;
+  }
+  
+  .chat input {
+    width: calc(100% - 60px);
+    margin-right: 10px;
+    padding: 10px;
+  }
+  
+  .chat button {
+    padding: 10px;
+  }

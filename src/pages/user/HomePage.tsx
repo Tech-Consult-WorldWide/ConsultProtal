@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../Firebase"; // Import Firestore
 import { collection, getDocs } from "firebase/firestore"; // Firestore functions
 import ExpertCard from "./../components/ExpertCard.tsx"; 
+import { Link } from "react-router-dom"; // For navigation to chat
 import "./HomePage.css";
 
 interface Expert {
@@ -18,11 +19,11 @@ const HomePage: React.FC = () => {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); // State to track errors
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
-  };  
+  };
 
   useEffect(() => {
     const fetchExperts = async () => {
@@ -63,18 +64,6 @@ const HomePage: React.FC = () => {
     );
   }
 
-  const removeExpert = (id: string) => {
-    setExperts((prevExperts) => prevExperts.filter((expert) => expert.id !== id));
-  };
-
-  const updateExpert = (id: string, updatedData: Partial<Expert>) => {
-    setExperts((prevExperts) =>
-      prevExperts.map((expert) =>
-        expert.id === id ? { ...expert, ...updatedData } : expert
-      )
-    );
-  };
-
   return (
     <div className="homepage-container">
       <header className="homepage-header">
@@ -103,24 +92,35 @@ const HomePage: React.FC = () => {
             onChange={handleSearch}
           />
         </div>
-        
+
         <div className="expert-list">
           {experts.filter((expert) =>
             expert.name.toLowerCase().includes(searchQuery.toLowerCase())
           ).length > 0 ? (
-            experts.filter((expert) =>
-              expert.name.toLowerCase().includes(searchQuery.toLowerCase())
-            ).map((expert) => (
-              <ExpertCard
-                key={expert.id}
-                id={expert.id}
-                name={expert.name}
-                photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
-                specialization={expert.specialization}
-                availability={expert.availability}
-                bio={expert.bio}
-              />
-            ))
+            experts
+              .filter((expert) =>
+                expert.name.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((expert) => (
+                <div key={expert.id} className="expert-card-container">
+                  <ExpertCard
+                    id={expert.id}
+                    name={expert.name}
+                    photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
+                    specialization={expert.specialization}
+                    availability={expert.availability}
+                    bio={expert.bio}
+                  />
+                  {/* Display Real-Time Availability */}
+                  <p className="availability">
+                    Availability: <strong>{expert.availability}</strong>
+                  </p>
+                  {/* Chat Now Button */}
+                  <Link to={`/chat/${expert.id}`} className="chat-button">
+                    Chat Now
+                  </Link>
+                </div>
+              ))
           ) : (
             <p className="no-experts">No experts found.</p>
           )}
