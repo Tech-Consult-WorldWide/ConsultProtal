@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ConsultProtal/static/css/main.65874f9e.css",
-    "main.js": "/ConsultProtal/static/js/main.14406a95.js",
+    "main.css": "/ConsultProtal/static/css/main.4c24a544.css",
+    "main.js": "/ConsultProtal/static/js/main.e488b4d9.js",
     "static/js/488.947f5048.chunk.js": "/ConsultProtal/static/js/488.947f5048.chunk.js",
     "index.html": "/ConsultProtal/index.html",
-    "main.65874f9e.css.map": "/ConsultProtal/static/css/main.65874f9e.css.map",
-    "main.14406a95.js.map": "/ConsultProtal/static/js/main.14406a95.js.map",
+    "main.4c24a544.css.map": "/ConsultProtal/static/css/main.4c24a544.css.map",
+    "main.e488b4d9.js.map": "/ConsultProtal/static/js/main.e488b4d9.js.map",
     "488.947f5048.chunk.js.map": "/ConsultProtal/static/js/488.947f5048.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.65874f9e.css",
-    "static/js/main.14406a95.js"
+    "static/css/main.4c24a544.css",
+    "static/js/main.e488b4d9.js"
   ]
 }
