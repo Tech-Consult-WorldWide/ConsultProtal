@@ -71,13 +71,13 @@ const HomePage: React.FC = () => {
         <nav className="homepage-nav">
           <ul>
             <li>
-              <a href="/dashboard">Dashboard</a>
+              <a href="/ConsultProtal/dashboard">Dashboard</a>
             </li>
             <li>
-              <a href="/profile">Profile</a>
+              <a href="/ConsultProtal/profile">Profile</a>
             </li>
             <li>
-              <a href="/settings">Settings</a>
+              <a href="/ConsultProtal/settings">Settings</a>
             </li>
           </ul>
         </nav>
