@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../Firebase"; // Import Firestore
 import { collection, getDocs } from "firebase/firestore"; // Firestore functions
-import ExpertCard from "./../components/ExpertCard.tsx"; 
+import ExpertCard from "./../components/ExpertCard.tsx";
 import { Link } from "react-router-dom"; // For navigation to chat
 import "./HomePage.css";
 
@@ -67,7 +67,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="homepage-container">
       <header className="homepage-header">
-        <h1>Welcome to Your Portal</h1>
+        <h1>Tech Consultants World Wide</h1>
         <nav className="homepage-nav">
           <ul>
             <li>
@@ -103,22 +103,25 @@ const HomePage: React.FC = () => {
               )
               .map((expert) => (
                 <div key={expert.id} className="expert-card-container">
-                  <ExpertCard
-                    id={expert.id}
-                    name={expert.name}
-                    photoUrl={process.env.PUBLIC_URL + expert.photoUrl} // Assuming it's stored in the 'public' folder
-                    specialization={expert.specialization}
-                    availability={expert.availability}
-                    bio={expert.bio}
-                  />
-                  {/* Display Real-Time Availability */}
-                  <p className="availability">
-                    Availability: <strong>{expert.availability}</strong>
-                  </p>
-                  {/* Chat Now Button */}
-                  <Link to={`/chat/${expert.id}`} className="chat-button">
-                    Chat Now
-                  </Link>
+                  <div className="expert-card">
+                    <div className="expert-card-left">
+                      <img
+                        src={process.env.PUBLIC_URL + expert.photoUrl}
+                        alt={expert.name}
+                      />
+                    </div>
+                    <div className="expert-card-right">
+                      <h3>{expert.name}</h3>
+                      <p>{expert.specialization}</p>
+                      <p>{expert.bio}</p>
+                      <p className="availability">
+                        Availability: <strong>{expert.availability}</strong>
+                      </p>
+                      <Link to={`/chat/${expert.id}`} className="chat-button">
+                        Chat Now
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               ))
           ) : (
