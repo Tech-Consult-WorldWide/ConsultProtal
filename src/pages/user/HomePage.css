@@ -92,16 +92,17 @@ body {
 
 .expert-card {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Ensures the button stays at the bottom */
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
-  width: 300px;
+  min-width: 400px;
+  height: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left;
+  gap: 20px;
 }
 
 .expert-card img {
@@ -113,8 +114,8 @@ body {
 }
 
 .expert-card h3 {
-  margin: 10px 0;
-  font-size: 18px;
+  margin: 5px 0;
+  font-size: 14px;
   color: #003f5c;
 }
 
@@ -145,6 +146,35 @@ body {
   border: 1px solid #eee;
   padding: 15px;
   border-radius: 8px;
+
+  min-width: 300px;
+  height: 200px;
+}
+
+.expert-card-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expert-card-left img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.expert-card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.expert-card-right h3,
+.expert-card-right p,
+.expert-card-right button {
+  margin-bottom: 10px;
 }
 
 .availability {
