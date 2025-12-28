@@ -3,6 +3,7 @@ import React from 'react';
 import Login from './pages/user/Login.tsx';
 import HomePage from './pages/user/HomePage.tsx';
 import SignUp from './pages/user/SignUp.tsx';
+import About from './pages/user/About';
 
 import Dashboard from './pages/user/Dashboard';
 import Profile from './pages/user/Profile.tsx';
@@ -25,6 +26,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/about" element={<About />} />
         <Route path="/book-appointment/:expertId" element={<BookAppointmentPage />} />
         
         <Route path="/availability-tracker" element={<AvailabilityTracker />} />

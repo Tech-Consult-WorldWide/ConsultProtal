@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../Firebase"; // Import Firestore
 import { collection, getDocs } from "firebase/firestore"; // Firestore functions
 import ExpertCard from "./../components/ExpertCard.tsx";
-import { Link } from "react-router-dom"; // For navigation to chat
+import { Link, NavLink } from "react-router-dom"; // For navigation to chat
 import "./HomePage.css";
 
 interface Expert {
@@ -67,20 +67,25 @@ const HomePage: React.FC = () => {
   return (
     <div className="homepage-container">
       <header className="homepage-header">
-        <h1>Tech Consultants World Wide</h1>
-        <nav className="homepage-nav">
-          <ul>
-            <li>
-              <a href="/ConsultProtal/dashboard">Dashboard</a>
-            </li>
-            <li>
-              <a href="/ConsultProtal/profile">Profile</a>
-            </li>
-            <li>
-              <a href="/ConsultProtal/settings">Settings</a>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Tech Consultants World Wide</h1>
+          <nav className="homepage-nav" aria-label="Main navigation">
+            <ul className="flex gap-6 items-center">
+              <li>
+                <NavLink to="/dashboard" className={({isActive})=> isActive? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-blue-600'}>Dashboard</NavLink>
+              </li>
+              <li>
+                <NavLink to="/profile" className={({isActive})=> isActive? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-blue-600'}>Profile</NavLink>
+              </li>
+              <li>
+                <NavLink to="/settings" className={({isActive})=> isActive? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-blue-600'} aria-label="Settings">Settings</NavLink>
+              </li>
+              <li>
+                <NavLink to="/About" className={({isActive})=> isActive? 'text-blue-600 font-medium' : 'text-gray-700 hover:text-blue-600'}>About</NavLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <main className="homepage-main">
         <h2>Meet Our Experts</h2>
